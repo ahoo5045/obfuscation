@@ -24,6 +24,9 @@ PutPath = '24_analysis.txt'		 	#JsVirus文件(卡饭精睿包2016.12.16.24).
 OutPath = '24_reverse.vir'	#提取到的文件.
 
 myJslog = []
+varStr = []
+varStrRemoveRepeat = []
+varStrRemoveRepeat.append('ahoo')
 
 AuthorSign = True
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding='utf-8') #改变标准输出的默认编码 
@@ -169,7 +172,8 @@ def JSVirus_Split():
 	writeList = []
 	for line in myJslog:
 		if line == "":
-			writeList.append(line)
+			#writeList.append(line)
+			pass
 		else:
 			for i in re.findall('\[(\s*"[^\[\]\(\)]+"\s*)\]',line):
 				patternFang = re.compile(i)
@@ -192,11 +196,14 @@ def JSVirus_Split():
 		else:
 			#print(lin1)
 			for m in re.findall('"\s*[^"\,\+]+\s*"',lin1):
-				patternYin = re.compile(m)
-				replaceTempstr1 = replaceFindStrUsArrlist(m)
-				#print(replaceTempstr1)
-				lin1 = patternYin.sub(replaceTempstr1,lin1,count=1)
-				#print(lin1)
+				if len(m) >= 2:
+					patternYin = re.compile(m[1:-1])
+					replaceTempstr1 = replaceFindStrUsArrlist(m[1:-1])
+					#print(replaceTempstr1)
+					lin1 = patternYin.sub(replaceTempstr1,lin1,count=1)
+					#print(lin1)
+				else:
+					lin1 = m
 			writeList2.append(lin1)
 			pass
 	#print(writeList2)
@@ -204,6 +211,7 @@ def JSVirus_Split():
 	
 	#4 写入并打开文件
 	#WriteResultFile(OutPath,writeList)
+	WriteResultFile(OutPath,varStr)
 	WriteResultFile(OutPath,writeList2)
 	os.system('notepad.exe ' + OutPath)
 	
@@ -245,21 +253,38 @@ def replaceListItemUsArrary(listItem):
 	arrList =[]
 	for i in range(0,arrLengt,1):
 		#插入
-		arrList.append(randStr())
-	arrList[index] = listItem
+		arrList.append(randStr(2,5))
+		
+	#v0.6
+	varName = randStr(3,7)
+	while varName in varStrRemoveRepeat:
+		varName = randStr(4,8)
+		
+	varStrItem = 'var '+ varName + ' = "' + listItem + '"'
+	#-------------------------------
+	arrList[index] = varName
 	replaceTemp = str(arrList) + '[' + str(index) + ']'
+	
+	replaceTemp_pattern = re.compile('\''+varName+'\'')
+	replaceTemp = replaceTemp_pattern.sub(varName,replaceTemp)
+	
+	
+	
 	#print(arrList)
 	#print(listItem)
-	#print(replaceTemp)
+	varStr.append(varStrItem)
+	varStrRemoveRepeat.append(varName)
+	print(varStrItem)
+	print(replaceTemp)
 
 	return replaceTemp
 
 
 #随机一个长度2-5的字符串	
-def randStr():
+def randStr(min,max):
 	
 	randstr = ''
-	strLengt = random.randint(2,5)
+	strLengt = random.randint(min,max)
 	for i in range(1,strLengt,1):
 		chrTem = chr(random.randint(97,122))
 		randstr = randstr + chrTem
