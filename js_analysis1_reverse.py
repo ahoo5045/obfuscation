@@ -211,13 +211,20 @@ def JSVirus_Split():
 	
 	#4 写入并打开文件
 	#WriteResultFile(OutPath,writeList)
+	
+	
+	#4.1字节写个乱序的function
+	print(varStr)
+	random.shuffle(varStr)
+	print(varStr)
 	WriteResultFile(OutPath,varStr)
 	WriteResultFile(OutPath,writeList2)
 	os.system('notepad.exe ' + OutPath)
 	
 	
-	print('The Virus has been analyzed,there is my advice! Thanks!')
+	print('The Code has been Splited,there is my advice! Thanks!')
 	return True	
+
 
 #替换符合条件的查找到的为数组类型.------------?应该在这个地方生成var同时返回
 def replaceFindStrUsArrlist(findstr):

