@@ -20,58 +20,108 @@ import shutil
 import random
 
 PutPath = '24_analysis.txt'	#JsVirus文件(卡饭精睿包2016.12.16.24).
-OutPath = '24_reverse.vir'	#提取到的文件.
+OutPath = '24_EngRefactorObfuscate.vir'	#提取到的文件.
 
 myInputList = []
 varStr 	= []
 varStrRemoveRepeat = []
 varStrRemoveRepeat.append('ahoo')
 
-AuthorSign = True
+
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding='utf-8') #改变标准输出的默认编码 
 
 class FileRead2Write(object):
 	
 	def __init__(self,InPath,OutPath):
-		self.InPath	= InPath
-		self.OutPath= OutPath
-	
+		self.InPath		= InPath
+		self.OutPath	= OutPath
+		self.AuthorSign = True
 	def ReadInputFile(self,ReadTye = 'r'):
 		logall = []
 		
 		#这个判断应该放到参数类里. if not os.path.isfile(self.InPath):
-		fpR = codecs.open(InPath,ReadTye,'utf-8')
+		fpR = codecs.open(self.InPath,ReadTye,'utf-8')
 		for line in fpR:
 			if None == line:
 				pass
 			else:
 				logall.append(line)
-	
 		fpR.close()
 		return logall
 
-	def WriteResultFile(self,OutList= [],WriteTye = 'a+'):	#后面可能改成词典
-		global AuthorSign
-		fpW = codecs.open(OutRePath,WriteTye,'utf-8')
-		if AuthorSign == True:
+	def WriteOutputFile(self,OutList= [],WriteTye = 'a+'):	#后面可能改成词典
+		fpW = codecs.open(self.OutPath,WriteTye,'utf-8')
+		if self.AuthorSign == True:
 			fpW.write('\n*****************************************************\r\n')
-			fpW.write('*		 		ahoo JsVirusAnalysis 					    ')
+			fpW.write('*		 		ahoo EngObfuscate 					    ')
 			fpW.write('\n***************************************************\r\n\n')
-			AuthorSign = False
+			self.AuthorSign = False
 		for i in OutList:
-			fpW.write(i + '\n')
+			fpW.write(i)
 		fpW.close()
 		return True
 		
+	def WriteOutputFileEx_ListShuffle(self,OutList= [],WriteTye = 'a+'):	#后面可能改成词典
+		fpW = codecs.open(self.OutPath,WriteTye,'utf-8')
+		if self.AuthorSign == True:
+			fpW.write('\n*****************************************************\r\n')
+			fpW.write('*		 		ahoo EngObfuscate 					    ')
+			fpW.write('\n***************************************************\r\n\n')
+			self.AuthorSign = False
+		if len(OutList)	== 0:
+			fpW.write('\n')
+			return True
+		random.shuffle(OutList)
+		for i in OutList:
+			fpW.write(i)
+		fpW.close()
+		return True
+		
+	def WriteOutputFileEx_LineStr(self,LineStr,WriteTye = 'a+'):
+		fpW = codecs.open(self.OutPath,WriteTye,'utf-8')
+		if self.AuthorSign == True:
+			fpW.write('\n***************************************************\n')
+			fpW.write('*		 		ahoo EngObfuscate 					    ')
+			fpW.write('\n***************************************************\n\n')
+			self.AuthorSign = False
+		fpW.write('\n' + LineStr + '\n')
+		fpW.close()
+		
+		return True
+		
+class RandomLenInStr(object):
+	def __init__(self):
+		pass
+	
+	#随机一个长度2-5的字符串	
+	def randStr(self,min,max):
+		randstr = ''
+		strLengt = random.randint(min,max)
+		for i in range(1,strLengt,1):
+			chrTem = chr(random.randint(97,122))
+			randstr = randstr + chrTem
+		return randstr
 
+class SplitEng(object):
+
+	def __init__(self):
+		pass
+	
+	
+
+		
+		
 #分割引擎
 def JSVirus_Split():
 	
-	fp = FileRead2Write(PutPath,OutPath)
+	fpClass = FileRead2Write(PutPath,OutPath)
 	#1.读取文件到LineList
-	myInputList = fp.ReadLogFile()
+	myInputList = fpClass.ReadInputFile()
 	
-	print(myInputList)
+	fpClass.WriteOutputFileEx_LineStr("This is my first refactor code!")
+	fpClass.WriteOutputFile(myInputList)
+	fpClass.WriteOutputFileEx_ListShuffle(myInputList)
+	
 	
 	'''
 	#2.以一句话为例子.
@@ -153,9 +203,9 @@ def JSVirus_Split():
 	print(varStr)
 	WriteResultFile(OutPath,varStr)
 	WriteResultFile(OutPath,writeList2)
-	os.system('notepad.exe ' + OutPath)
-	'''
 	
+	'''
+	os.system('"D:\\Program Files (x86)\\Notepad++\\notepad++.exe" ' + OutPath)
 	print('The Code has been Splited,there is my advice! Thanks!')
 	return True	
 
@@ -221,15 +271,6 @@ def replaceListItemUsArrary(listItem):
 	return replaceTemp
 
 
-#随机一个长度2-5的字符串	
-def randStr(min,max):
-	
-	randstr = ''
-	strLengt = random.randint(min,max)
-	for i in range(1,strLengt,1):
-		chrTem = chr(random.randint(97,122))
-		randstr = randstr + chrTem
-	return randstr
 
 #分割一个line中的元素返回list.
 def StrSplitLine(strForSplit):
