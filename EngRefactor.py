@@ -124,14 +124,21 @@ class RandomSequence(object):
 	
 	#应该从正常的代码列表中随机一句,当废话用,混淆效果更好.
 	#吧代码生成一个pprint py库在这调用,下版.
+	JsCodeList = ['new Function("a", "b", "return a+b;");','var ybdetof5 = new ActiveXObject("Scripting.FileSystemObject");']
 	def randCodeLine(self,CodeList = []):
 		if len(CodeList) == 0:
-			CodeList.append('Life is short')
-			CodeList.append('U need the Eng')
-		return CodeList[randint(0,len(CodeList))]
+			CodeList.append('Life is short,U need the Eng')
+		return random.choice(CodeList)
 		
-	#随机生成一个数组
-	def randStrArrary(self,minNum=3,maxNum=5)
+	def randChr(self):
+		return random.choice('abcdefghijklmnopqrstuvwxyz!@#$%^&*()')
+		
+	#在一段字符串中随选择若干个字符，形成列表
+	def randChrEx_List(self):
+		return random.sample('zyxwvutsrqponmlkjihgfedcba', 5)
+		
+	#随机生成一个List
+	def randStrList(self,minNum=3,maxNum = 5):
 		if minNum > maxNum:
 			minNum = min(minNum,maxNum)
 			maxNum = max(minNum,maxNum)
@@ -139,18 +146,25 @@ class RandomSequence(object):
 		arrLengt= random.randint(minNum,maxNum)
 		arrList =[]
 		for i in range(0,arrLengt,1):
-			#插入
 			arrList.append(self.randStr_az())
 		return arrList
 	
+	#生成数组模式1,2直接替换为变量.
+	
+	
+	
 	#随机一个function vbs的
 	def randFun_Vb(self):
+		return 'waitfortest\r\n coming~'
 		pass
 		
 	def randFunList_Vb(self,MaxLen):
 		funList=[]
-		for i in range(0,MaxLen,1) 
-		
+		[i for i in range(0,MaxLen,1) funList.append(self.randFun_Vb()) ]
+		return funList
+			
+		#a =1
+		#[i for i in range(0,10,1)	a = a+i ]
 
 class StrSplitEng(object):
 
@@ -176,7 +190,34 @@ class StrSplitEng(object):
 				result.append(j)
 		return result
 	
-	
+	#分割一个list中的元素返回list.	
+	def StrSplit(self,strForSplit = []):
+		strSplitList = []
+		result = []
+		if len(strForSplit) == 0:
+			#print(strForSplit)
+			return result
+
+		for i in strForSplit:
+			strleng = len(i)
+			if strleng <= 4:
+				result.append(i)
+			else:
+				#randlen = random.randint(2,int(strleng/2))
+				randlen = random.randint(2,4)
+				#print(randlen)
+				#print(i[:randlen])
+				#print(i[randlen:])
+				strSplitList.append(i[:randlen])
+				strSplitList.append(i[randlen:])
+				#print(strSplitList)
+				tempList = StrSplit(strSplitList)
+				
+				for j in tempList:
+					result.append(j)
+		#print('result\n')
+		#print(result)
+		return result
 	
 
 		
@@ -192,7 +233,7 @@ def JSVirus_Split():
 	fpClass.WriteOutputFile(myInputList)
 	fpClass.WriteOutputFileEx_ListShuffle(myInputList)
 	
-	
+	'''
 	#2.1替换[] 和()之间的.
 	writeList = []
 	for line in myInputList:
@@ -232,7 +273,7 @@ def JSVirus_Split():
 			writeList2.append(lin1)
 			pass
 	#print(writeList2)
-	
+	'''
 	os.system('"D:\\Program Files (x86)\\Notepad++\\notepad++.exe" ' + OutPath)
 	print('The Code has been Splited,there is my advice! Thanks!')
 	return True	
@@ -266,7 +307,7 @@ def replaceFindStrUsArrlist(findstr):
 def replaceListItemUsArrary(listItem):
 	
 	#对分割后数组的某个元素进行替换:随机数组长度.(index = random -1)
-	
+	arrLengt = 10
 	index 	= random.randint(0,arrLengt-1)
 	
 	
@@ -295,46 +336,6 @@ def replaceListItemUsArrary(listItem):
 
 	return replaceTemp
 
-
-
-#分割一个list中的元素返回list.	
-def StrSplit(strForSplit = []):
-	strSplitList = []
-	result = []
-	if len(strForSplit) == 0:
-		#print(strForSplit)
-		return result
-
-	for i in strForSplit:
-		strleng = len(i)
-		if strleng <= 4:
-			result.append(i)
-		else:
-			#randlen = random.randint(2,int(strleng/2))
-			randlen = random.randint(2,4)
-			#print(randlen)
-			#print(i[:randlen])
-			#print(i[randlen:])
-			strSplitList.append(i[:randlen])
-			strSplitList.append(i[randlen:])
-			#print(strSplitList)
-			tempList = StrSplit(strSplitList)
-			
-			for j in tempList:
-				result.append(j)
-	#print('result\n')
-	#print(result)
-	return result
-
-
-	
-#v0.7---------------
-#1.返回没用的function.
-#2.伪造可执行的语句(没意义的)按上面流程分割,掺杂.
-#3.先写吧,不一定在这一块用.
-# var add=new Function("a", "b", "return a+b;");
-# addr = ""
-# var addr = "new Function("a", "b", "return a+b;");"
 
 #v0.8---先不用开发了,有时间做个重构和优化吧.
 	
