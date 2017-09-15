@@ -32,15 +32,14 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding='utf-8') #改变标准�
 
 class FileRead2Write(object):
 	
-	def __init__(self,InPath,OutPath):
-		self.InPath		= InPath
-		self.OutPath	= OutPath
+	def __init__(self):
 		self.AuthorSign = True
-	def ReadInputFile(self,ReadTye = 'r'):
+		
+	def ReadInputFile(self,InPath,ReadTye = 'r'):
 		logall = []
 		
-		#这个判断应该放到参数类里. if not os.path.isfile(self.InPath):
-		fpR = codecs.open(self.InPath,ReadTye,'utf-8')
+		#这个判断应该放到参数类里. if not os.path.isfile(InPath):
+		fpR = codecs.open(InPath,ReadTye,'utf-8')
 		for line in fpR:
 			if None == line:
 				pass
@@ -49,8 +48,8 @@ class FileRead2Write(object):
 		fpR.close()
 		return logall
 
-	def WriteOutputFile(self,OutList= [],WriteTye = 'a+'):	#后面可能改成词典
-		fpW = codecs.open(self.OutPath,WriteTye,'utf-8')
+	def WriteOutputFile(self,OutPath,OutList= [],WriteTye = 'a+'):	#后面可能改成词典
+		fpW = codecs.open(OutPath,WriteTye,'utf-8')
 		if self.AuthorSign == True:
 			fpW.write('\n*****************************************************\r\n')
 			fpW.write('*		 		ahoo EngObfuscate 					    ')
@@ -61,8 +60,8 @@ class FileRead2Write(object):
 		fpW.close()
 		return True
 		
-	def WriteOutputFileEx_ListShuffle(self,OutList= [],WriteTye = 'a+'):	#后面可能改成词典
-		fpW = codecs.open(self.OutPath,WriteTye,'utf-8')
+	def WriteOutputFileEx_ListShuffle(self,OutPath,OutList= [],WriteTye = 'a+'):	#后面可能改成词典
+		fpW = codecs.open(OutPath,WriteTye,'utf-8')
 		if self.AuthorSign == True:
 			fpW.write('\n*****************************************************\r\n')
 			fpW.write('*		 		ahoo EngObfuscate 					    ')
@@ -77,8 +76,8 @@ class FileRead2Write(object):
 		fpW.close()
 		return True
 		
-	def WriteOutputFileEx_LineStr(self,LineStr,WriteTye = 'a+'):
-		fpW = codecs.open(self.OutPath,WriteTye,'utf-8')
+	def WriteOutputFileEx_LineStr(self,OutPath,LineStr,WriteTye = 'a+'):
+		fpW = codecs.open(OutPath,WriteTye,'utf-8')
 		if self.AuthorSign == True:
 			fpW.write('\n***************************************************\n')
 			fpW.write('*		 		ahoo EngObfuscate 					    ')
@@ -86,8 +85,29 @@ class FileRead2Write(object):
 			self.AuthorSign = False
 		fpW.write('\n' + LineStr + '\n')
 		fpW.close()
-		
 		return True
+		
+	def OpenOutPath(self,OutPath, = '"D:\\Program Files (x86)\\Notepad++\\notepad++.exe" '):
+		return os.system(program + OutPath) 		# program = 'notepad.exe' 
+		
+	'''	list排序
+		ransomFamilyList = list(set(ransomFamilyList))
+		list最后一行去掉\n
+		ransomFamilyList[-1] = ransomFamilyList[-1].strip('\n')
+		去空格.
+		ransomFamilyList.append(i.strip(' ') + '\n')	
+		
+		遍历目录
+		for parent,dirnames,filenames in os.walk(InputDir):
+			for filename in filenames:
+				fpRan.ReadInputFile(os.path.join(parent, filename)) 
+		
+		
+	'''
+		
+		
+		
+		
 		
 class RandomSequence(object):
 	def __init__(self):
