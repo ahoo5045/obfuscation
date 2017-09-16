@@ -92,7 +92,16 @@ class FileRead2Write(object):
 		return os.system(program + OutPath) 		# program = 'notepad.exe' 
 	
 	#将list写入另一个中.
-	def 
+	def WriteList2List(self,list1 = [],list2 = []):
+		if len(list1) == 0:
+			pass
+		else:
+			for i in list1:
+				list2.append(i)
+			
+		return True
+		
+		
 
 	
 	'''	1.list排序
@@ -361,23 +370,23 @@ class ObfuscateMethod(object):
 			else:
 				for i in re.findall('\[(\s*"[^\[\]\(\)]+"\s*)\]',line):
 					pattern_bracket = re.compile(i)
-					strtemp = spClass.StrSplitLine2SelfTypeStr(i)
-					varlsit,replaceTempstr =  rdClass.randSelfTypeStr2ArraryTypeStr(strtemp)
+					strtemp = self.spClass.StrSplitLine2SelfTypeStr(i)
+					varlsit,replaceTempstr = self.rdClass.randSelfTypeStr2ArraryTypeStr(strtemp)
 					line = pattern_bracket.sub(replaceTempstr,line,count=1)
 					for varItem in varlsit:
 							varStrTemp1.append(varItem)
 				
 				for j in re.findall('\((\s*"[^\[\]\(\)]+"\s*)\)',line):
 					pattern_bracket = re.compile(j)
-					strtemp = spClass.StrSplitLine2SelfTypeStr(j)
-					varlsit,replaceTempstr =  rdClass.randSelfTypeStr2ArraryTypeStr(strtemp)
+					strtemp = self.spClass.StrSplitLine2SelfTypeStr(j)
+					varlsit,replaceTempstr = self.rdClass.randSelfTypeStr2ArraryTypeStr(strtemp)
 					line = pattern_bracket.sub(replaceTempstr,line,count=1)
 					for varItem in varlsit:
 							varStrTemp1.append(varItem)
 				writeListTemp1.append(line)	
 				pass
 		
-		return varStrTemp,writeListTemp
+		return varStrTemp1,writeListTemp1
 		
 	
 	
@@ -396,14 +405,15 @@ def Eng():
 	#2.替换.
 	global varStr
 	varTem,writeTem  = obfuCla.ObfuscateQuotes(myInputList)
-	#print(varTem)
-	varTem1,__  = obfuCla.ObfuscateQuotes(myInputList)
+	#varTem1,__  = obfuCla.OufuscateBracket(myInputList)
 	
+	fpClass.WriteList2List(varTem,varStr)
+	#fpClass.WriteList2List(varTem1,varStr)
 	
 	
 	#3.输出
 	fpClass.WriteOutputFileEx_ListShuffle(OutPath,varStr)
-	fpClass.WriteOutputFile(OutPath,varTem)
+	fpClass.WriteOutputFile(OutPath,writeTem)
 	fpClass.OpenOutPath(OutPath)
 	
 	print('The Code has been Splited,there is my advice! Thanks!')
