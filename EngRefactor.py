@@ -90,7 +90,11 @@ class FileRead2Write(object):
 		
 	def OpenOutPath(self,OutPath,program = '"D:\\Program Files (x86)\\Notepad++\\notepad++.exe" '):
 		return os.system(program + OutPath) 		# program = 'notepad.exe' 
-		
+	
+	#将list写入另一个中.
+	def 
+
+	
 	'''	1.list排序
 		ransomFamilyList = list(set(ransomFamilyList))
 		2.list最后一行去掉\n
@@ -306,25 +310,117 @@ class StrSplitEng(object):
 	
 class ObfuscateMethod(object):
 	
+	rdClass = RandomSequence()
+	spClass = StrSplitEng()
+	
 	def __init__(self):
 		self.author = 'ahoo'
-	
-	
 		
+		
+	#1.替换""之间的.	
+	def ObfuscateQuotes(self,InputList=[]):
+		writeListTemp = []
+		varStrTemp = []
+		if len(InputList) == 0:
+			return varStrTemp,writeListTemp
+		
+		for lin1 in InputList:
+			if lin1 == "":
+				#writeListTemp.append(lin1)
+				pass
+			else:
+				for m in re.findall('"\s*[^"\,\+]+\s*"',lin1):
+					if len(m) >= 2:
+						pattern_quotes = re.compile(m[1:-1])
+						strtemp = self.spClass.StrSplitLine2SelfTypeStr(m[1:-1])
+						varlsit,replaceTempstr =  self.rdClass.randSelfTypeStr2ArraryTypeStr(strtemp)
+						#print(replaceTempstr1)
+						lin1 = pattern_quotes.sub(replaceTempstr,lin1,count=1)
+						#print(lin1)
+						for varItem in varlsit:
+							varStrTemp.append(varItem)
+					else:
+						lin1 = m
+				writeListTemp.append(lin1)
+				pass
+		
+		return varStrTemp,writeListTemp
+	
+	#2.替换[]和()之间的.
+	def OufuscateBracket(self,InputList1=[]):
+		writeListTemp1 = []
+		varStrTemp1 = []
+		
+		if len(InputList1) == 0:
+			return varStrTemp1,writeListTemp1
+			
+		for line in InputList1:
+			if line == "":
+				#writeListTemp1.append(line)
+				pass
+			else:
+				for i in re.findall('\[(\s*"[^\[\]\(\)]+"\s*)\]',line):
+					pattern_bracket = re.compile(i)
+					strtemp = spClass.StrSplitLine2SelfTypeStr(i)
+					varlsit,replaceTempstr =  rdClass.randSelfTypeStr2ArraryTypeStr(strtemp)
+					line = pattern_bracket.sub(replaceTempstr,line,count=1)
+					for varItem in varlsit:
+							varStrTemp1.append(varItem)
+				
+				for j in re.findall('\((\s*"[^\[\]\(\)]+"\s*)\)',line):
+					pattern_bracket = re.compile(j)
+					strtemp = spClass.StrSplitLine2SelfTypeStr(j)
+					varlsit,replaceTempstr =  rdClass.randSelfTypeStr2ArraryTypeStr(strtemp)
+					line = pattern_bracket.sub(replaceTempstr,line,count=1)
+					for varItem in varlsit:
+							varStrTemp1.append(varItem)
+				writeListTemp1.append(line)	
+				pass
+		
+		return varStrTemp,writeListTemp
+		
+	
 	
 
 #分割引擎
 def Eng():
 	
 	fpClass = FileRead2Write()
-	rdClass = RandomSequence()
-	spClass = StrSplitEng()
+	obfuCla	= ObfuscateMethod()
 
 	#1.读取文件到LineList
 	global myInputList
 	myInputList = fpClass.ReadInputFile(PutPath)
 	
+	
+	#2.替换.
+	global varStr
+	varTem,writeTem  = obfuCla.ObfuscateQuotes(myInputList)
+	#print(varTem)
+	varTem1,__  = obfuCla.ObfuscateQuotes(myInputList)
+	
+	
+	
+	#3.输出
+	fpClass.WriteOutputFileEx_ListShuffle(OutPath,varStr)
+	fpClass.WriteOutputFile(OutPath,varTem)
+	fpClass.OpenOutPath(OutPath)
+	
+	print('The Code has been Splited,there is my advice! Thanks!')
+	return True	
+
+	
+def Example():
 	'''
+	fpClass = FileRead2Write()
+	rdClass = RandomSequence()
+	spClass = StrSplitEng()
+	
+	#1.读取文件到LineList
+	global myInputList
+	myInputList = fpClass.ReadInputFile(PutPath)
+	
+	
 	fpClass.WriteOutputFileEx_LineStr(OutPath,"This is my first refactor code!")
 	fpClass.WriteOutputFile(OutPath,rdClass.randFunList_Vb(8))
 	fpClass.WriteOutputFile(OutPath,rdClass.randStrList(6,10))
@@ -339,68 +435,10 @@ def Eng():
 	varlsit,replace =  rdClass.randSelfTypeStr2ArraryTypeStr(strtemp1)
 	print(replace)
 	print(varlsit)
-	['nktk', 'qr', qaxccb, 'rxoh', 'w'][2] + ['fhn', 'pqlh', fpweqc][2] + ['uwm', ihcjzc, 'uzm'][1] + ['l', lh, 't', 'gkx'][1] + ['mjld', 'kwas', wzgc, 'jjog', 'xx'][2] + ['okm', 'axr', dbz, 'ipg', 'p'][2] + ['fde', 'pd', btgrqw][2] + [dlnim, 'g', 'iaah', 'm', 'r'][0]
-	['var qaxccb = "Sc"', 'var fpweqc = "ri"', 'var ihcjzc = "pti"', 'var lh = "ng.F"', 'var wzgc = "ileS"', 'var dbz = "yst"', 'var btgrqw = "emOb"', 'var dlnim ="ject"']
+	#['nktk', 'qr', qaxccb, 'rxoh', 'w'][2] + ['fhn', 'pqlh', fpweqc][2] + ['uwm', ihcjzc, 'uzm'][1] + ['l', lh, 't', 'gkx'][1] + ['mjld', 'kwas', wzgc, 'jjog', 'xx'][2] + ['okm', 'axr', dbz, 'ipg', 'p'][2] + ['fde', 'pd', btgrqw][2] + [dlnim, 'g', 'iaah', 'm', 'r'][0]
+	#['var qaxccb = "Sc"', 'var fpweqc = "ri"', 'var ihcjzc = "pti"', 'var lh = "ng.F"', 'var wzgc = "ileS"', 'var dbz = "yst"', 'var btgrqw = "emOb"', 'var dlnim ="ject"']
 	'''
-	
-	'''
-	#2.替换""之间的.
-	global varStr
-	writeList2 = []
-	for lin1 in myInputList:
-		if lin1 == "":
-			#writeList2.append(lin1)
-			pass
-		else:
-			for m in re.findall('"\s*[^"\,\+]+\s*"',lin1):
-				if len(m) >= 2:
-					pattern_quotes = re.compile(m[1:-1])
-					strtemp = spClass.StrSplitLine2SelfTypeStr(m[1:-1])
-					varlsit,replaceTempstr =  rdClass.randSelfTypeStr2ArraryTypeStr(strtemp)
-					#print(replaceTempstr1)
-					lin1 = pattern_quotes.sub(replaceTempstr,lin1,count=1)
-					#print(lin1)
-					for varItem in varlsit:
-						varStr.append(varItem)
-				else:
-					lin1 = m
-			writeList2.append(lin1)
-			pass
-	'''
-	
-
-	#2.1替换[] 和()之间的.
-	writeList = []
-	for line in myInputList:
-		if line == "":
-			#writeList.append(line)
-			pass
-		else:
-			for i in re.findall('\[(\s*"[^\[\]\(\)]+"\s*)\]',line):
-				pattern_bracket = re.compile(i)
-				strtemp = spClass.StrSplitLine2SelfTypeStr(i)
-				varlsit,replaceTempstr =  rdClass.randSelfTypeStr2ArraryTypeStr(strtemp)
-				line = pattern_bracket.sub(replaceTempstr,line,count=1)
-				for varItem in varlsit:
-						varStr.append(varItem)
-			
-			for j in re.findall('\((\s*"[^\[\]\(\)]+"\s*)\)',line):
-				pattern_bracket = re.compile(j)
-				strtemp = spClass.StrSplitLine2SelfTypeStr(j)
-				varlsit,replaceTempstr =  rdClass.randSelfTypeStr2ArraryTypeStr(strtemp)
-				line = pattern_bracket.sub(replaceTempstr,line,count=1)
-				for varItem in varlsit:
-						varStr.append(varItem)
-			writeList.append(line)	
-			pass
-	
-
-	fpClass.WriteOutputFileEx_ListShuffle(OutPath,varStr)
-	fpClass.WriteOutputFile(OutPath,writeList)
-	fpClass.OpenOutPath(OutPath)
-	print('The Code has been Splited,there is my advice! Thanks!')
-	return True	
-
+	pass
 	
 
 if __name__ == '__main__':
