@@ -17,26 +17,43 @@ import codecs
 import re
 import shutil
 import random
+import logging
 
-PutPath = '24_analysis.txt'	#JsVirus文件(卡饭精睿包2016.12.16.24).
+
+logging.basicConfig(
+		level = logging.DEBUG,
+		format = '%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s'
+		#,filename='myapp.log',
+		#filemode='a+'
+		)
+
+sys.stdout = io.TextIOWrapper(
+				sys.stdout.buffer,
+				encoding='utf-8') #改变标准输出的默认编码
+
+
+PutPath = '24_analysis.txt'				#JsVirus文件(卡饭精睿包2016.12.16.24).
 OutPath = '24_EngRefactorObfuscate.vir'	#提取到的文件.
 
+
+#global area
 myInputList = []
 varStr 	= []
 varStrRemoveRepeat = []
 varStrRemoveRepeat.append('ahoo')
 
-'''是不是需要生成几个全局类对象。'''
 
-
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer,encoding='utf-8') #改变标准输出的默认编码 
 
 class FileRead2Write(object):
 	
 	def __init__(self):
 		self.AuthorSign = True
 		
-	def ReadInputFile(self,InPath,ReadTye = 'r'):
+	def ReadInputFile(
+			self,
+			InPath,
+			ReadTye = 'r'):
+		
 		logall = []
 		
 		#这个判断应该放到参数类里. if not os.path.isfile(InPath):
@@ -130,21 +147,21 @@ class RandomSequence(object):
 	
 	
 	#随机一个长度2-5的字符串,一般用作变量名	
-	def randStr_az(self,minNum=2,maxNum=5):			#判断一下大小传反了的情况
-		try:
-			randstr = ''
-			if minNum > maxNum:
-				minNum = min(minNum,maxNum)
-				maxNum = max(minNum,maxNum)
-			strLengt = random.randint(minNum,maxNum)
-			for i in range(1,strLengt,1):
-				chrTem = chr(random.randint(97,122))
-				randstr = randstr + chrTem
-			return randstr
-		except Exception as e:
-			print(e)
-			return 'ahoo'
-			pass
+	def randStr_az(
+			self,
+			minNum=2,
+			maxNum=5):			#判断一下大小传反了的情况
+		
+		randstr = ''
+		if minNum > maxNum:
+			minNum = min(minNum,maxNum)
+			maxNum = max(minNum,maxNum)
+		strLengt = random.randint(minNum,maxNum)
+		for i in range(1,strLengt,1):
+			chrTem = chr(random.randint(97,122))
+			randstr = randstr + chrTem
+		return randstr
+		
 	
 	
 	def randStr_AZUp(self,minNum=2,maxNum=5):
@@ -161,7 +178,10 @@ class RandomSequence(object):
 	
 	#从正常的代码列表中随机一句,当废话用,混淆效果更好.
 	'''吧代码生成一个pprint py库在这调用,下版.'''
-	JsCodeList = ['new Function("a", "b", "return a+b;");','var ybdetof5 = new ActiveXObject("Scripting.FileSystemObject");']
+	JsCodeList = [
+		'new Function("a", "b", "return a+b;");',
+		'var ybdetof5 = new ActiveXObject("Scripting.FileSystemObject");'
+		]
 	def randCodeLine(self,CodeList = []):
 		if len(CodeList) == 0:
 			CodeList.append('Life is short,U need the Eng')
@@ -394,29 +414,36 @@ class ObfuscateMethod(object):
 #分割引擎
 def Eng():
 	
-	fpClass = FileRead2Write()
-	obfuCla	= ObfuscateMethod()
+	try:
+		
+		fpClass = FileRead2Write()
+		obfuCla	= ObfuscateMethod()
 
-	#1.读取文件到LineList
-	global myInputList
-	myInputList = fpClass.ReadInputFile(PutPath)
-	
-	
-	#2.替换.
-	global varStr
-	varTem,writeTem  = obfuCla.ObfuscateQuotes(myInputList)
-	#varTem1,__  = obfuCla.OufuscateBracket(myInputList)
-	
-	fpClass.WriteList2List(varTem,varStr)
-	#fpClass.WriteList2List(varTem1,varStr)
-	
-	
-	#3.输出
-	fpClass.WriteOutputFileEx_ListShuffle(OutPath,varStr)
-	fpClass.WriteOutputFile(OutPath,writeTem)
-	fpClass.OpenOutPath(OutPath)
-	
-	print('The Code has been Splited,there is my advice! Thanks!')
+		#1.读取文件到LineList
+		global myInputList
+		myInputList = fpClass.ReadInputFile(PutPath)
+		
+		
+		#2.替换.
+		global varStr
+		varTem,writeTem  = obfuCla.ObfuscateQuotes(myInputList)
+		#varTem1,__  = obfuCla.OufuscateBracket(myInputList)
+		
+		fpClass.WriteList2List(varTem,varStr)
+		#fpClass.WriteList2List(varTem1,varStr)
+		
+		logging.debug(varTem)
+		
+		#3.输出
+		fpClass.WriteOutputFileEx_ListShuffle(OutPath,varStr)
+		fpClass.WriteOutputFile(OutPath,writeTem)
+		fpClass.OpenOutPath(OutPath)
+		
+		print('The Code has been Splited,there is my advice! Thanks!')
+		
+	except :											#except Exception as e:  logging.debug(e)
+		logging.exception('Eng has a exception info.')
+		
 	return True	
 
 	
