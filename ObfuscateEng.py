@@ -23,35 +23,25 @@ import logging
 logging.basicConfig(
 		level = logging.DEBUG,		#不需要输出时改为INFO					
 		format = '%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s'
-		,filename='myapp.log',
-		filemode='a+'
+		#,filename='myapp.log',
+		#filemode='a+'
 		)
+#'''
 
 #'''
-try:
-	#指定log输出格式.
-	formatter = logging.Formatter('%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s')
-	#输出到console
-	console_handler	= logging.StreamHandler(sys.stdout)
-	console_handler.setLevel(logging.DEBUG)
-	console_handler.formatter = formatter
-	logging.getLogger('').addHandler(console_handler)
-	##输出到文件
-	#file_handler= logging.FileHandler('myapp.log','a+')		#FileHandler(filename, mode=’a’, encoding=None, delay=False)
-	#file_handler.setFormatter(formatter)
-	#file_handler.setLevel(logging.DEBUG)
-	##logging.getLogger('').addHandler(file_handler)
-except Exception as e:
-	print(e)
-
-'''
-console = logging.StreamHandler()
-console.setLevel(logging.DEBUG)
-
-console.setFormatter(formatter)
-logging.getLogger('').addHandler(console)
-
-'''
+#指定log输出格式. logging有一个日志处理的主对象，其它处理方式都是通过addHandler添加进去的。
+formatter = logging.Formatter('%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s')
+#输出到文件
+file_handler= logging.FileHandler('myapp.log','a+')		#FileHandler(filename, mode=’a’, encoding=None, delay=False)
+file_handler.setFormatter(formatter)
+file_handler.setLevel(logging.DEBUG)
+logging.getLogger('').addHandler(file_handler)
+##输出到console
+#console_handler	= logging.StreamHandler(sys.stdout)
+#console_handler.setLevel(logging.DEBUG)
+#console_handler.formatter = formatter
+#logging.getLogger('').addHandler(console_handler)
+#'''
 
 
 		
@@ -469,7 +459,7 @@ def Eng():
 		fpClass.WriteOutputFile(OutPath,writeTem)
 		fpClass.OpenOutPath(OutPath)
 		
-		logging.debug('The Code has been Splited,there is my advice! Thanks!')
+		logging.info('The Code has been Splited,there is my advice! Thanks!')
 		print('The Code has been Splited,there is my advice! Thanks!')
 		
 	except :											#except Exception as e:  logging.debug(e)
