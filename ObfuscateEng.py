@@ -49,9 +49,6 @@ logging.config.fileConfig('log\\logging.conf')
 logging.getLogger()
 
 
-		
-		
-
 sys.stdout = io.TextIOWrapper(
 				sys.stdout.buffer,
 				encoding='utf-8') #改变标准输出的默认编码
