@@ -18,17 +18,16 @@ import re
 import shutil
 import random
 import logging
+import logging.config
 
-#'''
+''' ---------------代码配置
 logging.basicConfig(
 		level = logging.DEBUG,		#不需要输出时改为INFO					
 		format = '%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s'
 		#,filename='myapp.log',
 		#filemode='a+'
 		)
-#'''
 
-#'''
 #指定log输出格式. logging有一个日志处理的主对象，其它处理方式都是通过addHandler添加进去的。
 formatter = logging.Formatter('%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s')
 #输出到文件
@@ -41,7 +40,13 @@ logging.getLogger('').addHandler(file_handler)
 #console_handler.setLevel(logging.DEBUG)
 #console_handler.formatter = formatter
 #logging.getLogger('').addHandler(console_handler)
+
 #'''
+
+#--------------------文件配置----------
+logfilePath = os.path.join(os.path.dirname(__file__), 'logging.conf')
+logging.config.fileConfig('logging.conf')
+logging.getLogger()
 
 
 		
@@ -457,7 +462,7 @@ def Eng():
 		#3.输出
 		fpClass.WriteOutputFileEx_ListShuffle(OutPath,varStr)
 		fpClass.WriteOutputFile(OutPath,writeTem)
-		fpClass.OpenOutPath(OutPath)
+		#fpClass.OpenOutPath(OutPath)
 		
 		logging.info('The Code has been Splited,there is my advice! Thanks!')
 		print('The Code has been Splited,there is my advice! Thanks!')
