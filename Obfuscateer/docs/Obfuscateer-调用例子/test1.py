@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 '''
+	目前版本v0.8--Refactor
+	
+	计划:
+	v0.8 --用vb二次加密.
+	v0.9 --自变形.
 	v1.0 --发布.
 '''
 __author__ = 'ahoo'
@@ -14,9 +19,9 @@ import shutil
 import random
 import logging
 import logging.config
-from FileRead2Write import FileRead2Write 
-from RandomSequence import RandomSequence
-from StrSplitEng 	import StrSplitEng
+from Obfuscateer.FileRead2Write import FileRead2Write 
+from Obfuscateer.RandomSequence import RandomSequence
+from Obfuscateer.StrSplitEng 	import StrSplitEng
 
 #--------------------文件配置----------
 logfilePath = os.path.join(os.path.dirname(__file__), 'logging.conf')
@@ -27,6 +32,14 @@ logging.getLogger()
 #sys.stdout = io.TextIOWrapper(
 #				sys.stdout.buffer,
 #				encoding='utf-8') #改变标准输出的默认编码
+
+
+PutPath = 'Sample\\24_analysis.txt'				#JsVirus文件(卡饭精睿包2016.12.16.24).
+OutPath = 'Sample\\24_EngRefactorObfuscate.vir'	#提取到的文件.
+
+#global area
+myInputList = []
+varStr 	= []
 
 
 class ObfuscateMethod(object):
@@ -99,43 +112,47 @@ class ObfuscateMethod(object):
 				pass
 		
 		return varStrTemp1,writeListTemp1
-
-class EngCla(object):
+		
 	
-	varStr = []
 	
-	def __init__(self,PutPath,OutPath):
-		self.author = 'ahoo'
-		self.PutPath = PutPath
-		self.OutPath = OutPath
-	def Eng(self):
-		try:
-			
-			fpClass = FileRead2Write()
-			obfuCla	= ObfuscateMethod()
 
-			#1.读取文件到LineList
-			myInputList = fpClass.ReadInputFile(self.PutPath)
-			
-			
-			#2.替换.
-			varTem,writeTem  = obfuCla.ObfuscateQuotes(myInputList)
-			#varTem1,__  = obfuCla.OufuscateBracket(myInputList)
-			
-			fpClass.WriteList2List(varTem,self.varStr)
-			#fpClass.WriteList2List(varTem1,self.varStr)
-			
-			#logging.debug(varTem)
-			
-			#3.输出
-			fpClass.WriteOutputFileEx_ListShuffle(self.OutPath,self.varStr)
-			fpClass.WriteOutputFile(self.OutPath,writeTem)
-			#fpClass.OpenOutPath(self.OutPath)
-			
-			logging.info('The Code has been Splited,there is my advice! Thanks!')
-			print('The Code has been Splited,there is my advice! Thanks!')
-			
-		except :											#except Exception as e:  logging.debug(e)
-			logging.exception('Eng has a exception info.')
-			
-		return True
+#分割引擎
+def Eng():
+	
+	try:
+		
+		fpClass = FileRead2Write()
+		obfuCla	= ObfuscateMethod()
+
+		#1.读取文件到LineList
+		global myInputList
+		myInputList = fpClass.ReadInputFile(PutPath)
+		
+		
+		#2.替换.
+		global varStr
+		varTem,writeTem  = obfuCla.ObfuscateQuotes(myInputList)
+		#varTem1,__  = obfuCla.OufuscateBracket(myInputList)
+		
+		fpClass.WriteList2List(varTem,varStr)
+		#fpClass.WriteList2List(varTem1,varStr)
+		
+		#logging.debug(varTem)
+		
+		#3.输出
+		fpClass.WriteOutputFileEx_ListShuffle(OutPath,varStr)
+		fpClass.WriteOutputFile(OutPath,writeTem)
+		#fpClass.OpenOutPath(OutPath)
+		
+		
+		logging.info('The Code has been Splited,there is my advice! Thanks!')
+		print('The Code has been Splited,there is my advice! Thanks!')
+		
+	except :											#except Exception as e:  logging.debug(e)
+		logging.exception('Eng has a exception info.')
+		
+	return True	
+
+
+if __name__ == '__main__':
+    Eng()

@@ -12,9 +12,9 @@ config = {
     'author_email': 'My email.',
     'version': '0.1',
     'install_requires': ['nose'],
-    'packages': ['ObfuscateEng'],
+    'packages': ['Obfuscateer'],
     'scripts': [],
-    'name': 'projectname'
+    'name': 'Obfuscateer'
 }
 
 setup(**config)

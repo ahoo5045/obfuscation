@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from nose.tools import *
-import ObfuscateEng
+import Obfuscateer
 
 def setup():
     print("SETUP!")
