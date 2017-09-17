@@ -1,3 +1,6 @@
 24_reverse.vir
 24_EngRefactorObfuscate.vir
 myapp.log
+log/myapp.log
+log/error.log
+log/debug.log

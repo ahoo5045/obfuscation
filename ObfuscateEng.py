@@ -44,8 +44,8 @@ logging.getLogger('').addHandler(file_handler)
 #'''
 
 #--------------------文件配置----------
-logfilePath = os.path.join(os.path.dirname(__file__), 'logging.conf')
-logging.config.fileConfig('logging.conf')
+logfilePath = os.path.join(os.path.dirname(__file__), 'log\\logging.conf')
+logging.config.fileConfig('log\\logging.conf')
 logging.getLogger()
 
 
@@ -463,6 +463,7 @@ def Eng():
 		fpClass.WriteOutputFileEx_ListShuffle(OutPath,varStr)
 		fpClass.WriteOutputFile(OutPath,writeTem)
 		#fpClass.OpenOutPath(OutPath)
+		
 		
 		logging.info('The Code has been Splited,there is my advice! Thanks!')
 		print('The Code has been Splited,there is my advice! Thanks!')
