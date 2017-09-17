@@ -55,7 +55,6 @@ class FileRead2Write(object):
 		for i in OutList:
 			fpW.write(i)
 		fpW.close()
-		1/0
 		return True
 		
 	def WriteOutputFileEx_ListShuffle(self,OutPath,OutList= [],WriteTye = 'a+'):	#后面可能改成词典

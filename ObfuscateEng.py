@@ -34,8 +34,8 @@ logging.getLogger()
 #				encoding='utf-8') #改变标准输出的默认编码
 
 
-PutPath = '24_analysis.txt'				#JsVirus文件(卡饭精睿包2016.12.16.24).
-OutPath = '24_EngRefactorObfuscate.vir'	#提取到的文件.
+PutPath = 'Sample\\24_analysis.txt'				#JsVirus文件(卡饭精睿包2016.12.16.24).
+OutPath = 'Sample\\24_EngRefactorObfuscate.vir'	#提取到的文件.
 
 #global area
 myInputList = []
