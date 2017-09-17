@@ -1,11 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 '''
-	目前版本v0.8--Refactor
-	
-	计划:
-	v0.8 --用vb二次加密.
-	v0.9 --自变形.
 	v1.0 --发布.
 '''
 __author__ = 'ahoo'
@@ -32,14 +27,6 @@ logging.getLogger()
 #sys.stdout = io.TextIOWrapper(
 #				sys.stdout.buffer,
 #				encoding='utf-8') #改变标准输出的默认编码
-
-
-PutPath = 'Sample\\24_analysis.txt'				#JsVirus文件(卡饭精睿包2016.12.16.24).
-OutPath = 'Sample\\24_EngRefactorObfuscate.vir'	#提取到的文件.
-
-#global area
-myInputList = []
-varStr 	= []
 
 
 class ObfuscateMethod(object):
@@ -112,78 +99,43 @@ class ObfuscateMethod(object):
 				pass
 		
 		return varStrTemp1,writeListTemp1
-		
-	
-	
 
-#分割引擎
-def Eng():
+class EngCla(object):
 	
-	try:
-		
-		fpClass = FileRead2Write()
-		obfuCla	= ObfuscateMethod()
+	varStr = []
+	
+	def __init__(self,PutPath,OutPath):
+		self.author = 'ahoo'
+		self.PutPath = PutPath
+		self.OutPath = OutPath
+	def Eng(self):
+		try:
+			
+			fpClass = FileRead2Write()
+			obfuCla	= ObfuscateMethod()
 
-		#1.读取文件到LineList
-		global myInputList
-		myInputList = fpClass.ReadInputFile(PutPath)
-		
-		
-		#2.替换.
-		global varStr
-		varTem,writeTem  = obfuCla.ObfuscateQuotes(myInputList)
-		#varTem1,__  = obfuCla.OufuscateBracket(myInputList)
-		
-		fpClass.WriteList2List(varTem,varStr)
-		#fpClass.WriteList2List(varTem1,varStr)
-		
-		#logging.debug(varTem)
-		
-		#3.输出
-		fpClass.WriteOutputFileEx_ListShuffle(OutPath,varStr)
-		fpClass.WriteOutputFile(OutPath,writeTem)
-		#fpClass.OpenOutPath(OutPath)
-		
-		1/0
-		logging.info('The Code has been Splited,there is my advice! Thanks!')
-		print('The Code has been Splited,there is my advice! Thanks!')
-		
-	except :											#except Exception as e:  logging.debug(e)
-		logging.exception('Eng has a exception info.')
-		
-	return True	
-
-	
-def Example():
-	'''
-	fpClass = FileRead2Write()
-	rdClass = RandomSequence()
-	spClass = StrSplitEng()
-	
-	#1.读取文件到LineList
-	global myInputList
-	myInputList = fpClass.ReadInputFile(PutPath)
-	
-	
-	fpClass.WriteOutputFileEx_LineStr(OutPath,"This is my first refactor code!")
-	fpClass.WriteOutputFile(OutPath,rdClass.randFunList_Vb(8))
-	fpClass.WriteOutputFile(OutPath,rdClass.randStrList(6,10))
-	fpClass.WriteOutputFileEx_ListShuffle(OutPath,myInputList)
-	print(rdClass.randStrArrary('ahoo'))
-	print(rdClass.randStrArryEx_var('ahoo'))
-	strtemp = spClass.StrSplitLine2List("Scripting.FileSystemObject")
-	print(strtemp)
-	strtemp1 = spClass.StrSplitLine2SelfTypeStr('Scripting.FileSystemObject')
-	print(strtemp1)
-	strtemp1 = spClass.StrSplitLine2SelfTypeStr('Scripting.FileSystemObject')
-	varlsit,replace =  rdClass.randSelfTypeStr2ArraryTypeStr(strtemp1)
-	print(replace)
-	print(varlsit)
-	#['nktk', 'qr', qaxccb, 'rxoh', 'w'][2] + ['fhn', 'pqlh', fpweqc][2] + ['uwm', ihcjzc, 'uzm'][1] + ['l', lh, 't', 'gkx'][1] + ['mjld', 'kwas', wzgc, 'jjog', 'xx'][2] + ['okm', 'axr', dbz, 'ipg', 'p'][2] + ['fde', 'pd', btgrqw][2] + [dlnim, 'g', 'iaah', 'm', 'r'][0]
-	#['var qaxccb = "Sc"', 'var fpweqc = "ri"', 'var ihcjzc = "pti"', 'var lh = "ng.F"', 'var wzgc = "ileS"', 'var dbz = "yst"', 'var btgrqw = "emOb"', 'var dlnim ="ject"']
-	'''
-	pass
-	
-
-if __name__ == '__main__':
-    Eng()
+			#1.读取文件到LineList
+			myInputList = fpClass.ReadInputFile(self.PutPath)
+			
+			
+			#2.替换.
+			varTem,writeTem  = obfuCla.ObfuscateQuotes(myInputList)
+			#varTem1,__  = obfuCla.OufuscateBracket(myInputList)
+			
+			fpClass.WriteList2List(varTem,self.varStr)
+			#fpClass.WriteList2List(varTem1,self.varStr)
+			
+			#logging.debug(varTem)
+			
+			#3.输出
+			fpClass.WriteOutputFileEx_ListShuffle(self.OutPath,self.varStr)
+			fpClass.WriteOutputFile(self.OutPath,writeTem)
+			#fpClass.OpenOutPath(self.OutPath)
+			
+			logging.info('The Code has been Splited,there is my advice! Thanks!')
+			print('The Code has been Splited,there is my advice! Thanks!')
+			
+		except :											#except Exception as e:  logging.debug(e)
+			logging.exception('Eng has a exception info.')
+			
+		return True
