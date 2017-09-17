@@ -6,3 +6,4 @@ log/error.log
 log/debug.log
 __pycache__/
 oldVer/v0.94/log/
+ObfuscateEngDevelop/log/
